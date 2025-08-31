@@ -19,9 +19,8 @@ class Assistant(Agent):
 
 async def entrypoint(ctx: agents.JobContext):
     session = AgentSession(
-        llm=openai.realtime.RealtimeModel(
-            voice="coral"
-        )
+        llm=openai.realtime.RealtimeModel(),
+        voice='ballad',
     )
 
     await session.start(

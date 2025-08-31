@@ -28,4 +28,4 @@ Git
 
     # push and replace the remote branch safely
     git push --force-with-lease origin HEAD:your-branch
-2. ###
+2. Use .gitignore to not publish secret files, otherwise github will block uploads
