@@ -1,0 +1,10 @@
+Terminal
+1. Creating virtual environment using python -m venv venv
+2. python agent.py download-files can be used to downnload files locally to run code
+3. requirements.txt can be used to name all libraries needed, download all these requirements using pip install -r requirements.txt
+4. To activate virtual environment
+5. Ctrl-C to exit running console
+
+Python
+1. Importing other files as libraries
+2. Run the software locally using python <file_name.py> console
