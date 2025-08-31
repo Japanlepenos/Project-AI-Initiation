@@ -1,8 +1,12 @@
 livekit-agents
+livekit-agents[cartesia]~=1.2
+livekit-agents[deepgram]~=1.2
 livekit-plugins-openai
 livekit-plugins-silero
 livekit-plugins-google
 livekit-plugins-noise-cancellation
+livekit-plugins-turn-detector
+openai
 mem0ai
 duckduckgo-search
 langchain_community

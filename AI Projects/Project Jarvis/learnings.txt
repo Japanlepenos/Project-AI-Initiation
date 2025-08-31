@@ -1,0 +1,30 @@
+Terminal
+1. Creating virtual environment using python -m venv venv
+2. python agent.py download-files can be used to downnload files locally to run code
+3. requirements.txt can be used to name all libraries needed, download all these requirements using pip install -r requirements.txt
+4. To activate virtual environment
+5. Ctrl-C to exit running console
+
+Python
+1. Importing other files as libraries
+2. Run the software locally using python <file_name.py> console
+
+Git
+1. Below is the step to cleanup branch by deleting unwanted commit history
+# be on the branch you want to clean
+git checkout your-branch
+
+# (optional) make sure secrets aren’t tracked going forward
+printf "\n.env\n**/.env\n" >> .gitignore
+git rm --cached -r .env 2>/dev/null || true
+git add .gitignore
+git commit -m "Ignore env files" || true
+
+# create a new commit from the current tree (no parents)
+new=$(git commit-tree HEAD^{tree} -m "Clean snapshot: $(date -u '+%Y-%m-%d %H:%M UTC')")
+
+# move the branch to that single commit
+git reset --hard "$new"
+
+# push and replace the remote branch safely
+git push --force-with-lease origin HEAD:your-branch
