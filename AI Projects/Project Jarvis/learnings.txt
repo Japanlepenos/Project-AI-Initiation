@@ -11,20 +11,21 @@ Python
 
 Git
 1. Below is the step to cleanup branch by deleting unwanted commit history
-# be on the branch you want to clean
-git checkout your-branch
+    # be on the branch you want to clean
+    git checkout your-branch
 
-# (optional) make sure secrets aren’t tracked going forward
-printf "\n.env\n**/.env\n" >> .gitignore
-git rm --cached -r .env 2>/dev/null || true
-git add .gitignore
-git commit -m "Ignore env files" || true
+    # (optional) make sure secrets aren’t tracked going forward
+    printf "\n.env\n**/.env\n" >> .gitignore
+    git rm --cached -r .env 2>/dev/null || true
+    git add .gitignore
+    git commit -m "Ignore env files" || true
 
-# create a new commit from the current tree (no parents)
-new=$(git commit-tree HEAD^{tree} -m "Clean snapshot: $(date -u '+%Y-%m-%d %H:%M UTC')")
+    # create a new commit from the current tree (no parents)
+    new=$(git commit-tree HEAD^{tree} -m "Clean snapshot: $(date -u '+%Y-%m-%d %H:%M UTC')")
 
-# move the branch to that single commit
-git reset --hard "$new"
+    # move the branch to that single commit
+    git reset --hard "$new"
 
-# push and replace the remote branch safely
-git push --force-with-lease origin HEAD:your-branch
+    # push and replace the remote branch safely
+    git push --force-with-lease origin HEAD:your-branch
+2. Use .gitignore to not publish secret files, otherwise github will block uploads
