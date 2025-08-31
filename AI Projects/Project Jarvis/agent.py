@@ -6,21 +6,20 @@ from livekit.plugins import (
     openai,
     noise_cancellation,
 )
-from livekit.plugins.turn_detector.multilingual import MultilingualModel
-from prompts import AGENT_INSTRUCTIONS, SESSION_INSTRUCTIONS
 
-#Load environment variables from .env file
 load_dotenv()
+
 
 class Assistant(Agent):
     def __init__(self) -> None:
-        super().__init__(instructions=AGENT_INSTRUCTIONS)
+        super().__init__(instructions="You are a helpful voice AI assistant.")
 
 
 async def entrypoint(ctx: agents.JobContext):
     session = AgentSession(
-        llm=openai.realtime.RealtimeModel(),
-        voice='ballad',
+        llm=openai.realtime.RealtimeModel(
+            voice="coral"
+        )
     )
 
     await session.start(
@@ -33,7 +32,7 @@ async def entrypoint(ctx: agents.JobContext):
     )
 
     await session.generate_reply(
-        instructions=SESSION_INSTRUCTIONS
+        instructions="Greet the user and offer your assistance."
     )
 
 
