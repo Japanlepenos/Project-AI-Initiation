@@ -7,7 +7,7 @@ from livekit.plugins import (
     noise_cancellation,
 )
 
-load_dotenv(".env.local")
+load_dotenv(".env")
 
 class Assistant(Agent):
     def __init__(self) -> None:
@@ -19,6 +19,7 @@ server = AgentServer()
 async def my_agent(ctx: agents.JobContext):
     session = AgentSession(
         llm=openai.realtime.RealtimeModel(
+            model='gpt-realtime-4o',
             voice="coral"
         )
     )
