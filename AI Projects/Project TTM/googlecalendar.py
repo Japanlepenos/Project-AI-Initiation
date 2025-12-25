@@ -10,7 +10,6 @@ Things to update:
 - Change the code to callable methods instead to integrate into main.py as needed
 """
 
-
 import os.path
 from datetime import datetime, timezone
 
