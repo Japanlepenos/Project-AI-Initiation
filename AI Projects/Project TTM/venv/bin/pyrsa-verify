@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/japanlepenos/Desktop/Programming/AI Projects/Project TTM/venv/bin/python3" "$0" "$@"
+'''exec' "/Users/japanlepenos/Desktop/Programming/AI Projects/Project TTM/venv/bin/python" "$0" "$@"
 ' '''
 import sys
 from rsa.cli import verify
