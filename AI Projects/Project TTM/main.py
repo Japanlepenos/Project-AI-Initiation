@@ -9,6 +9,8 @@ from livekit.plugins import (
     silero
 )
 
+from CalendarTools import Calendar
+
 load_dotenv()
 
 class Assistant(Agent):
@@ -27,6 +29,7 @@ class Assistant(Agent):
             llm=llm,
             tts=tts,
             vad=silero_vad,
+            tools =[],
         )
 
 server = AgentServer()
