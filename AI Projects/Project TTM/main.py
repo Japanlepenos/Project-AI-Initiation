@@ -17,7 +17,12 @@ class Assistant(Agent):
     def __init__(self) -> None:
         llm = openai.LLM(model="gpt-4o")
         stt = openai.STT()
-        tts = elevenlabs.TTS(voice_id="EXAVITQu4vr4xnSDxMaL") # for different voices, get API voice IDs from https://api.elevenlabs.io/v1/voices
+        # tts = elevenlabs.TTS(voice_id="EXAVITQu4vr4xnSDxMaL") # for different voices, get API voice IDs from https://api.elevenlabs.io/v1/voices
+        tts = openai.TTS(
+            model="gpt-4o-mini-tts",
+            voice="fable",
+            instructions="Speak in a friendly, natural American accent. Crisp, warm, not robotic.",
+        )
         silero_vad = silero.VAD.load()
         self.calendar = Calendar()
 
