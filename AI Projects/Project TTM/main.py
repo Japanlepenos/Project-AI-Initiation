@@ -9,7 +9,7 @@ from livekit.plugins import (
     silero
 )
 
-from CalendarTools import Calendar
+from tools.CalendarTools import Calendar
 
 load_dotenv()
 
@@ -17,13 +17,13 @@ class Assistant(Agent):
     def __init__(self) -> None:
         llm = openai.LLM(model="gpt-4o")
         stt = openai.STT()
-        tts = elevenlabs.TTS(voice_id="cgSgspJ2msm6clMCkdW9") # for different voices, get API voice IDs from https://api.elevenlabs.io/v1/voices
+        tts = elevenlabs.TTS(voice_id="EXAVITQu4vr4xnSDxMaL") # for different voices, get API voice IDs from https://api.elevenlabs.io/v1/voices
         silero_vad = silero.VAD.load()
         self.calendar = Calendar()
 
         super().__init__(
             instructions="""
-                You are my personal assistant. Keep answers short, concise, casual and easy to understand. Remember that my name is Japan.
+                You are my personal assistant. Always keep answer short, unless explicitly asked for more details. Remember that my name is Japan.
             """,
             stt=stt,
             llm=llm,

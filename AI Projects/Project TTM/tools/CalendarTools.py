@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from livekit.agents import Agent, function_tool, RunContext
-from CalendarAPI import CalendarAPI
+from tools.CalendarAPI import CalendarAPI
 
 class Calendar():
     def __init__(self):
@@ -13,7 +13,7 @@ class Calendar():
         """
         Context for Agent:
         Fetches the upcoming calendar events from personal calendar. The maxResults parameter specifies how many events to retrieve.
-        Retrieve the event details focusing on the event name, time & date, location and invitees. Infer the name of attendees from email addresses.
+        Always retrieve only the event name and time first. Do not give too much details unless requested.
 
         Args:
           maxResults: The maximum number of upcoming events to retrieve.
@@ -42,7 +42,7 @@ class Calendar():
 
 if __name__ == "__main__":
     userCalendar = Calendar()
-    upcomingEvents = userCalendar.getUpcomingEvents(None, 10)
+    upcomingEvents = userCalendar.getUpcomingEvents(10)
 
     print(type(upcomingEvents))
     print(upcomingEvents)
