@@ -47,13 +47,3 @@ class CalendarAPI():
         )
     
         return events_result
-    
-if __name__ == "__main__":
-    auth = CalendarAPI()
-    creds = auth.getCredentials()
-    schedule = auth.buildSchedule(creds)
-
-    print("✅ Credentials loaded")
-    print("Access token:", creds.token)
-    print("Refresh token:", creds.refresh_token)
-    print("Expiry:", creds.expiry)
