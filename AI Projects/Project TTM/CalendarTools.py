@@ -1,37 +1,64 @@
-from __future__ import annotations
-from typing import Any
 from datetime import datetime, timezone
-from googleapiclient.discovery import build
-from livekit.agents import function_tool, RunContext
-import GoogleAPI
-from APICredentials import Credentials
+from livekit.agents import Agent, function_tool, RunContext
+from CalendarAPI import CalendarAPI
 
 class Calendar():
     def __init__(self):
-        self.service = build("calendar", "v3", credentials=Credentials.getCredentials(creds: None))
+        self.userCalendar = CalendarAPI()
+        self.credentials = self.userCalendar.getCredentials()
+        self.schedule = self.userCalendar.buildSchedule(self.credentials)
 
-    def get_upcoming_events(self):
+    @function_tool()
+    async def getUpcomingEvents(self, ctx: RunContext, maxResults: int) -> dict:
+        """
+        Context for Agent:
+        Fetches the upcoming calendar events from personal calendar. The maxResults parameter specifies how many events to retrieve.
+        Retrieve the event details focusing on the event name, time & date, location and invitees. Infer the name of attendees from email addresses.
+
+        Args:
+          maxResults: The maximum number of upcoming events to retrieve.
+
+        Returns:
+          A dictionary containing the upcoming events or a message indicating no events are found.
+
+        """
         now = datetime.now(timezone.utc).isoformat()
         print("Getting upcoming events...")
 
-        events_result = (
-            self.service.events()
-            .list(
-                calendarId="primary",
-                timeMin=now,
-                maxResults=10,
-                singleEvents=True,
-                orderBy="startTime",
-            )
-            .execute()
+        events_result = self.userCalendar.getEvents(
+            self.schedule,
+            startTime=now,
+            maxResults=maxResults,
         )
 
-        events = events_result.get("items", [])
-        
+        events = self.checkEmptyEvents(events_result, "No upcoming events found.")
         return events
 
+    def checkEmptyEvents(self, events, no_event_message):
+        if not events:
+            return {"NoEventMessage": no_event_message}
+        else:
+            return events
 
+if __name__ == "__main__":
+    userCalendar = Calendar()
+    upcomingEvents = userCalendar.getUpcomingEvents(None, 10)
 
+    print(type(upcomingEvents))
+    print(upcomingEvents)
+
+# events_result = (
+#     self.schedule.events()
+#     .list(
+#         calendarId="primary",
+#         timeMin=now,
+#         maxResults=10,
+#         singleEvents=True,
+#         orderBy="startTime",
+#     )
+#     .execute()
+# )
+    
 # @function_tool()
 # async def lookup_drug_info(context: RunContext, drug_name: str) -> dict[str, Any]:
 #     """Look up basic drug information for a medication.

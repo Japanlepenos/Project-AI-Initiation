@@ -4,7 +4,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-class GoogleCredentials():
+class CalendarAPI():
     def __init__(self):
         self.creds = None
         self.scopes = ["https://www.googleapis.com/auth/calendar"]
@@ -28,14 +28,30 @@ class GoogleCredentials():
                 token.write(creds.to_json())
         
         return creds
-    
-    def buildCalendar(self, creds):
+
+    def buildSchedule(self, creds):
         service = build("calendar", "v3", credentials=creds)
         return service
     
+    def getEvents(self, schedule, startTime, maxResults):
+        events_result = (
+            schedule.events()
+            .list(
+                calendarId="primary",
+                timeMin=startTime,
+                maxResults=maxResults,
+                singleEvents=True,
+                orderBy="startTime",
+            )
+            .execute()
+        )
+    
+        return events_result
+    
 if __name__ == "__main__":
-    auth = GoogleCredentials()
+    auth = CalendarAPI()
     creds = auth.getCredentials()
+    schedule = auth.buildSchedule(creds)
 
     print("✅ Credentials loaded")
     print("Access token:", creds.token)

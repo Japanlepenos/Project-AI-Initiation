@@ -17,19 +17,19 @@ class Assistant(Agent):
     def __init__(self) -> None:
         llm = openai.LLM(model="gpt-4o")
         stt = openai.STT()
-        # tts = elevenlabs.TTS()
-        tts = elevenlabs.TTS(voice_id="FGY2WhTYpPnrIDTdsKH5") # for different voices, get API voice IDs from https://api.elevenlabs.io/v1/voices
+        tts = elevenlabs.TTS(voice_id="cgSgspJ2msm6clMCkdW9") # for different voices, get API voice IDs from https://api.elevenlabs.io/v1/voices
         silero_vad = silero.VAD.load()
+        self.calendar = Calendar()
 
         super().__init__(
             instructions="""
-                You are a doctor who is enthusiastic about helping patients. Keep answers short, concise, and easy to understand.
+                You are my personal assistant. Keep answers short, concise, casual and easy to understand. Remember that my name is Japan.
             """,
             stt=stt,
             llm=llm,
             tts=tts,
             vad=silero_vad,
-            tools =[],
+            tools =[self.calendar.getUpcomingEvents],
         )
 
 server = AgentServer()
@@ -47,7 +47,7 @@ async def my_agent(ctx: agents.JobContext):
     )
 
     await session.generate_reply(
-        instructions="Hello. I'm Baymax, your personal healthcare companion. How can I assist you today?",
+        instructions="Hello. How can I help you today?",
     )
 
 if __name__ == "__main__":
