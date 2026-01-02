@@ -20,15 +20,15 @@ class Assistant(Agent):
         # tts = elevenlabs.TTS(voice_id="EXAVITQu4vr4xnSDxMaL") # for different voices, get API voice IDs from https://api.elevenlabs.io/v1/voices
         tts = openai.TTS(
             model="gpt-4o-mini-tts",
-            voice="fable",
-            instructions="Speak in a friendly, natural American accent. Crisp, warm, not robotic.",
+            voice="alloy",
+            instructions="Speak in a friendly, natural accent. Speak at 1.5x speed. Keep answers concise unless more details are requested.",
         )
         silero_vad = silero.VAD.load()
         self.calendar = Calendar()
 
         super().__init__(
             instructions="""
-                You are my personal assistant. Always keep answer short, unless explicitly asked for more details. Remember that my name is Japan.
+                You are my personal assistant. Always keep answer short, unless explicitly asked for more details. Remember that my name is Japan. If the event will take some time, tell me to wait before responding."
             """,
             stt=stt,
             llm=llm,
@@ -42,7 +42,6 @@ server = AgentServer()
 @server.rtc_session()
 async def my_agent(ctx: agents.JobContext):
     session = AgentSession()
-
     await session.start(
         room=ctx.room,
         agent=Assistant(),

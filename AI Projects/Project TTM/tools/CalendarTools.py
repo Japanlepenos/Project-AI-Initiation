@@ -15,6 +15,9 @@ class Calendar():
         Fetches the upcoming calendar events from personal calendar. The maxResults parameter specifies how many events to retrieve.
         Always retrieve only the event name and time first. Do not give too much details unless requested.
 
+        Things to note:
+        - Ignore any events which I have declined
+
         Args:
           maxResults: The maximum number of upcoming events to retrieve.
 
