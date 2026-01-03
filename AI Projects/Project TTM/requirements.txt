@@ -6,5 +6,5 @@ livekit-plugins-silero
 livekit-plugins-noise-cancellation
 livekit-plugins-elevenlabs
 google-auth
-google-auth-oauthlibpip
+google-auth-oauthlib
 google-api-python-client
